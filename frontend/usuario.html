@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OCar - Registro de usuários</title>
+  <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+<div id="app" v-cloak class="container py-5" style="max-width: 800px">
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <h1 class="h4 border-bottom pb-2 mb-4">Registro de usuários</h1>
+
+      <div v-if="erro" class="alert alert-danger">{{ erro }}</div>
+
+      <form @submit.prevent="cadastrar">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="login">Login</label>
+            <input id="login" class="form-control" :class="{ 'is-invalid': loginEmUso }"
+                   v-model.trim="usuario.login" @input="loginEmUso = false" @blur="verificarLogin" required>
+            <div class="invalid-feedback">Este login já está em uso.</div>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="senha">Senha</label>
+            <input id="senha" type="password" class="form-control" v-model="usuario.senha" required>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="perfil">Perfil</label>
+            <select id="perfil" class="form-select" v-model="usuario.perfil" required>
+              <option value="CLIENTE">Cliente</option>
+              <option value="FUNCIONARIO">Funcionário</option>
+            </select>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between gap-2 mt-4">
+          <a href="login.html" class="btn btn-outline-secondary">Login</a>
+          <button type="submit" class="btn btn-primary" :disabled="loginEmUso">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/vue.global.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  criarApp({
+    data() {
+      return {
+        usuario: { login: '', senha: '', perfil: 'CLIENTE' },
+        loginEmUso: false,
+        erro: '',
+      };
+    },
+    methods: {
+      async verificarLogin() {
+        if (!this.usuario.login) return;
+        try {
+          this.loginEmUso = await api.get('/usuarios/existe?login=' + encodeURIComponent(this.usuario.login));
+        } catch (e) {
+          this.erro = e.message;
+        }
+      },
+      async cadastrar() {
+        this.erro = '';
+        try {
+          await api.post('/usuarios', this.usuario);
+          window.location.href = 'login.html?cadastrado&login=' + encodeURIComponent(this.usuario.login);
+        } catch (e) {
+          this.erro = e.message;
+        }
+      },
+    },
+  }).mount('#app');
+</script>
+</body>
+</html>

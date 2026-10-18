@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OCar - Meus Dados</title>
+  <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+<div id="app" v-cloak class="d-flex flex-column min-vh-100">
+  <app-header></app-header>
+
+  <main class="container py-4 flex-grow-1" style="max-width: 800px">
+    <h1 class="h4 mb-4">Meus Dados</h1>
+
+    <div v-if="erro" class="alert alert-danger">{{ erro }}</div>
+    <div v-if="sucesso" class="alert alert-success">{{ sucesso }}</div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="login">Login</label>
+        <input id="login" class="form-control" :value="dados.login" disabled>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label" for="perfil">Perfil</label>
+        <input id="perfil" class="form-control" :value="fmt.perfil(dados.perfil)" disabled>
+      </div>
+    </div>
+
+    <div class="text-end mt-3" v-if="!alterandoSenha">
+      <button class="btn btn-outline-primary" @click="alterandoSenha = true">Alterar senha</button>
+    </div>
+
+    <form v-else class="card card-body mt-4" @submit.prevent="alterarSenha">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="novaSenha">Nova senha</label>
+          <input id="novaSenha" type="password" class="form-control" v-model="novaSenha" required>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="confirmacao">Confirmar nova senha</label>
+          <input id="confirmacao" type="password" class="form-control" v-model="confirmacao" required>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 mt-3">
+        <button type="button" class="btn btn-outline-secondary" @click="cancelar">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </main>
+
+  <app-footer></app-footer>
+</div>
+
+<script src="vendor/vue.global.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  criarApp({
+    perfis: ['CLIENTE', 'FUNCIONARIO'],
+    data() {
+      return {
+        dados: { login: '', perfil: '' },
+        alterandoSenha: false,
+        novaSenha: '',
+        confirmacao: '',
+        erro: '',
+        sucesso: '',
+      };
+    },
+    async mounted() {
+      try {
+        this.dados = await api.get('/usuarios/meus-dados');
+      } catch (e) {
+        this.erro = e.message;
+      }
+    },
+    methods: {
+      async alterarSenha() {
+        this.erro = '';
+        this.sucesso = '';
+        if (this.novaSenha !== this.confirmacao) {
+          this.erro = 'As senhas não conferem.';
+          return;
+        }
+        try {
+          await api.patch('/usuarios/senha', { senha: this.novaSenha });
+          this.sucesso = 'Senha alterada com sucesso.';
+          this.cancelar();
+        } catch (e) {
+          this.erro = e.message;
+        }
+      },
+      cancelar() {
+        this.alterandoSenha = false;
+        this.novaSenha = '';
+        this.confirmacao = '';
+      },
+    },
+  }).mount('#app');
+</script>
+</body>
+</html>

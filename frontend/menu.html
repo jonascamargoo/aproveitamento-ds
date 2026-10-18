@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OCar - Menu</title>
+  <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap-icons/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+<div id="app" v-cloak class="d-flex flex-column min-vh-100">
+  <app-header></app-header>
+
+  <main class="container py-5 flex-grow-1">
+    <div class="row g-3 justify-content-center">
+      <div v-for="item in itensDoPerfil" :key="item.url" class="col-6 col-md-4 col-lg-3">
+        <a :href="item.url" class="card menu-card h-100 text-center text-decoration-none text-body">
+          <div class="card-body py-4">
+            <i class="bi" :class="item.icone"></i>
+            <div class="mt-2 fw-semibold">{{ item.titulo }}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>
+
+<script src="vendor/vue.global.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  criarApp({
+    perfis: ['CLIENTE', 'FUNCIONARIO'],
+    data() {
+      return {
+        // Para adicionar uma tela nova ao menu, basta incluir uma linha aqui
+        itens: [
+          { titulo: 'Meus Dados', icone: 'bi-person-gear', url: 'meusdados.html', perfis: ['CLIENTE', 'FUNCIONARIO'] },
+          { titulo: 'Veículos', icone: 'bi-car-front', url: 'veiculos.html', perfis: ['FUNCIONARIO'] },
+          { titulo: 'Gerenciar Locações', icone: 'bi-clipboard-check', url: 'gerenciarlocacoes.html', perfis: ['FUNCIONARIO'] },
+          { titulo: 'Minhas Locações', icone: 'bi-calendar-check', url: 'minhaslocacoes.html', perfis: ['CLIENTE'] },
+        ],
+      };
+    },
+    computed: {
+      itensDoPerfil() {
+        return this.itens.filter((item) => item.perfis.includes(this.usuarioLogado.perfil));
+      },
+    },
+  }).mount('#app');
+</script>
+</body>
+</html>

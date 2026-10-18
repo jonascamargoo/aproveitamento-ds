@@ -1,0 +1,33 @@
+[v-cloak] {
+  display: none;
+}
+
+.logo {
+  color: #1f5fa8;
+}
+
+.menu-card {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.menu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.menu-card .bi {
+  font-size: 2.5rem;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+/* Celular: tabelas mais compactas para caber sem rolagem */
+@media (max-width: 576px) {
+  .table > :not(caption) > * > * {
+    padding: 0.4rem 0.25rem;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,642 @@
+_type: export
+__export_format: 4
+__export_date: '2026-10-14T13:00:00.000Z'
+__export_source: insomnia.desktop.app:v2023.5.8
+resources:
+- _id: wrk_63d716318cd34c568660f674dd84730c
+  parentId: null
+  modified: 1789914071218
+  created: 1789758502724
+  name: Aproveitamento de Estudos - Avaliacao Pratica - Parte I
+  description: 16 endpoints da Parte I; JWT por perfil; dados parametrizados
+  scope: collection
+  _type: workspace
+- _id: env_46503e37e12e49d68499fe9b
+  parentId: wrk_63d716318cd34c568660f674dd84730c
+  modified: 1791993877394
+  created: 1791993877394
+  name: Base Environment
+  data:
+    base_url: http://localhost:8080
+    login_cliente: cliente
+    senha_cliente: cliente
+    login_funcionario: funcionario
+    senha_funcionario: funcionario
+    nova_senha: '123456'
+    token_cliente: ''
+    token_funcionario: ''
+    veiculo_id: 1
+    veiculo_exclusao_id: 2
+    locacao_id: 1
+    cliente_id: 1
+    placa: ABC1D23
+    descricao: Toyota Corolla
+    descricao_atualizada: Toyota Corolla XEi
+  dataPropertyOrder:
+    '&':
+    - base_url
+    - login_cliente
+    - senha_cliente
+    - login_funcionario
+    - senha_funcionario
+    - nova_senha
+    - token_cliente
+    - token_funcionario
+    - veiculo_id
+    - veiculo_exclusao_id
+    - locacao_id
+    - cliente_id
+    - placa
+    - descricao
+    - descricao_atualizada
+  color: null
+  isPrivate: false
+  metaSortKey: -9999
+  _type: environment
+- _id: fld_47b7016dce004657af5d63fa
+  parentId: wrk_63d716318cd34c568660f674dd84730c
+  modified: 1791993877394
+  created: 1791993877394
+  name: 01 - Usuarios e Autenticacao
+  description: ''
+  environment: {}
+  environmentPropertyOrder: null
+  metaSortKey: 0
+  _type: request_group
+- _id: fld_5fd713f00cdb4b56ac18e9fa
+  parentId: wrk_63d716318cd34c568660f674dd84730c
+  modified: 1791993877394
+  created: 1791993877394
+  name: 02 - Veiculos
+  description: ''
+  environment: {}
+  environmentPropertyOrder: null
+  metaSortKey: 1000
+  _type: request_group
+- _id: fld_a173bde1ae244e92a7ac9070
+  parentId: wrk_63d716318cd34c568660f674dd84730c
+  modified: 1791993877394
+  created: 1791993877394
+  name: 03 - Locacoes
+  description: ''
+  environment: {}
+  environmentPropertyOrder: null
+  metaSortKey: 2000
+  _type: request_group
+- _id: req_703bbcda12284207b88283a1
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios'
+  name: Cadastrar - Cliente
+  description: Publico. Login unico. Execute uma vez em base vazia.
+  method: POST
+  body:
+    mimeType: application/json
+    text: "{\n  \"login\": \"{{ _.login_cliente }}\",\n  \"senha\": \"{{ _.senha_cliente }}\",\n  \"perfil\": \"CLIENTE\"\n\
+      }"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  authentication: {}
+  metaSortKey: 50
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_8708a26cfe3e45869a3ee6f9
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios'
+  name: Cadastrar - Funcionario
+  description: Publico. Login unico. Execute uma vez em base vazia.
+  method: POST
+  body:
+    mimeType: application/json
+    text: "{\n  \"login\": \"{{ _.login_funcionario }}\",\n  \"senha\": \"{{ _.senha_funcionario }}\",\n  \"perfil\": \"FUNCIONARIO\"\
+      \n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  authentication: {}
+  metaSortKey: 60
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_3333b75abc9542e08824915a
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios/existe?login={{ _.login_cliente }}'
+  name: Verificar existencia de usuario
+  description: Publico. Altere login na URL para verificar outros usuarios.
+  method: GET
+  body: {}
+  parameters: []
+  headers: []
+  authentication: {}
+  metaSortKey: 70
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_0286d3a2466e48d5a6a2d856
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/login'
+  name: Login - Cliente
+  description: Publico. Copie o campo token da resposta para token_cliente no Base Environment.
+  method: POST
+  body:
+    mimeType: application/json
+    text: "{\n  \"login\": \"{{ _.login_cliente }}\",\n  \"senha\": \"{{ _.senha_cliente }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  authentication: {}
+  metaSortKey: 80
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_7b30310605824e15b83a7154
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/login'
+  name: Login - Funcionario
+  description: Publico. Copie o campo token da resposta para token_funcionario no Base Environment.
+  method: POST
+  body:
+    mimeType: application/json
+    text: "{\n  \"login\": \"{{ _.login_funcionario }}\",\n  \"senha\": \"{{ _.senha_funcionario }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  authentication: {}
+  metaSortKey: 90
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_f7ca1b020b1e4542873b4e8a
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios/meus-dados'
+  name: Meus dados - Cliente
+  description: Identidade extraida do JWT.
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_cliente }}
+  authentication: {}
+  metaSortKey: 100
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_7d6dbcf98ca14bf388a875a4
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios/senha'
+  name: Alterar senha - Cliente
+  description: Apos alterar, atualize senha_cliente e faca novo login.
+  method: PATCH
+  body:
+    mimeType: application/json
+    text: "{\n  \"senha\": \"{{ _.nova_senha }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer {{ _.token_cliente }}
+  authentication: {}
+  metaSortKey: 110
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_d284dea8b63042bd810187ca
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios/meus-dados'
+  name: Meus dados - Funcionario
+  description: Identidade extraida do JWT.
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 120
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_c0a9951c341a424fb895a344
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios/senha'
+  name: Alterar senha - Funcionario
+  description: Apos alterar, atualize senha_funcionario e faca novo login.
+  method: PATCH
+  body:
+    mimeType: application/json
+    text: "{\n  \"senha\": \"{{ _.nova_senha }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 130
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_fcf774d0684d4694872a5e3c
+  parentId: fld_47b7016dce004657af5d63fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/usuarios/clientes'
+  name: Listar clientes - Funcionario
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 140
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_1208a5eb3bf3455b938761d6
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos'
+  name: Listar veiculos - Funcionario
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 150
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_1603e731b057475badeadd23
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos/{{ _.veiculo_id }}'
+  name: Consultar veiculo por ID - Cliente
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_cliente }}
+  authentication: {}
+  metaSortKey: 160
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_bcc6f9f1b2b941c0b793a0fd
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos/{{ _.veiculo_id }}'
+  name: Consultar veiculo por ID - Funcionario
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 170
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_462831656b5343f7bcdd57e7
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos/existe?placa={{ _.placa }}'
+  name: Verificar existencia por placa - Funcionario
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 180
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_5ff898b79d7843499dbde2a3
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos'
+  name: Cadastrar veiculo - Funcionario
+  description: Disponivel deve iniciar true automaticamente; nao enviar disponivel.
+  method: POST
+  body:
+    mimeType: application/json
+    text: "{\n  \"placa\": \"{{ _.placa }}\",\n  \"descricao\": \"{{ _.descricao }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 190
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_d963c3b1d32a46a7a196e0e4
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos/{{ _.veiculo_id }}'
+  name: Alterar descricao - Funcionario
+  description: Nao enviar placa ou disponivel.
+  method: PATCH
+  body:
+    mimeType: application/json
+    text: "{\n  \"descricao\": \"{{ _.descricao_atualizada }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 200
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_a5d8cb14ef654fc482d93247
+  parentId: fld_5fd713f00cdb4b56ac18e9fa
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/veiculos/{{ _.veiculo_exclusao_id }}'
+  name: Excluir veiculo - Funcionario
+  description: Utilize veiculo sem historico de locacoes; a exclusao de associado a locacoes deve ser negada.
+  method: DELETE
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 210
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_8e416f0e8be546b089e532e2
+  parentId: fld_a173bde1ae244e92a7ac9070
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/locacoes'
+  name: Criar locacao - Funcionario
+  description: O funcionarioId vem do JWT. Situacao EM_ANDAMENTO e veiculo indisponivel automaticamente.
+  method: POST
+  body:
+    mimeType: application/json
+    text: "{\n  \"veiculoId\": \"{{ _.veiculo_id }}\",\n  \"clienteId\": \"{{ _.cliente_id }}\"\n}"
+  parameters: []
+  headers:
+  - name: Content-Type
+    value: application/json
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 220
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_bc16d310d2b945fe9f61b69e
+  parentId: fld_a173bde1ae244e92a7ac9070
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/locacoes/minhas'
+  name: Minhas locacoes - Cliente
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_cliente }}
+  authentication: {}
+  metaSortKey: 230
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_7d6d7631141b428db3496343
+  parentId: fld_a173bde1ae244e92a7ac9070
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/locacoes/{{ _.locacao_id }}'
+  name: Consultar locacao por ID - Cliente
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_cliente }}
+  authentication: {}
+  metaSortKey: 240
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_67c09cd8a43e4e4f909b5842
+  parentId: fld_a173bde1ae244e92a7ac9070
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/locacoes/minhas'
+  name: Minhas locacoes - Funcionario
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 250
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_704c68ba6d2f4063bc1c00ed
+  parentId: fld_a173bde1ae244e92a7ac9070
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/locacoes/{{ _.locacao_id }}'
+  name: Consultar locacao por ID - Funcionario
+  description: ''
+  method: GET
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 260
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
+- _id: req_963173e65f6d46038becc6a9
+  parentId: fld_a173bde1ae244e92a7ac9070
+  modified: 1791993877394
+  created: 1791993877394
+  url: '{{ _.base_url }}/locacoes/{{ _.locacao_id }}/finalizar'
+  name: Finalizar locacao - Funcionario
+  description: Apenas funcionario responsavel e locacao EM_ANDAMENTO.
+  method: PATCH
+  body: {}
+  parameters: []
+  headers:
+  - name: Authorization
+    value: Bearer {{ _.token_funcionario }}
+  authentication: {}
+  metaSortKey: 270
+  isPrivate: false
+  settingStoreCookies: true
+  settingSendCookies: true
+  settingDisableRenderRequestBody: false
+  settingEncodeUrl: true
+  settingRebuildPath: true
+  settingFollowRedirects: global
+  _type: request
